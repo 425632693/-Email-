@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.cuiboshi.mapper.IUserMapper">
+	<!-- 添加用户 -->
+	<insert id="register" parameterType="User">
+		<selectKey resultType="String" keyProperty="id" order="BEFORE">
+			select REPLACE(uuid(),'-','') from dual
+		</selectKey>
+		insert into user(id,uname,upass,userType,creatTs,email) values(#{id},#{uname},#{upass},#{userType},#{creatTs},#{email})
+	</insert>
+	
+	<!-- 找回密码的查询 -->
+	<select id="queryBackUpass" parameterType="User" resultType="User">
+		select * from user where uname=#{uname} and email=#{email}
+	</select>
+	
+	<!-- 用户登录 -->
+	<select id="queryLogin" parameterType="User" resultType="User">
+		select * from user where uname=#{uname} and upass=#{upass}
+	</select>
+	
+	<!-- 上传景点 -->
+	<insert id="uploading" parameterType="Jd">
+		<selectKey resultType="String" keyProperty="jdId" order="BEFORE">
+			select REPLACE(uuid(),'-','') from dual
+		</selectKey>
+		
+		insert into jd(jdId,jdName,jdContent,jdProvince,jdImage) values (#{jdId},#{jdName},#{jdContent},#{jdProvince}#{jdImage});
+	</insert>
+	
+	
+	<!-- 景点查询 -->
+	<select id="queryJd" resultType="Jd" parameterType="Jd">
+		select * from jd
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

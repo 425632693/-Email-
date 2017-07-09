@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    		http://www.springframework.org/schema/mvc 
+    		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+    		http://www.springframework.org/schema/context 
+	        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- 开启Spring注解扫描 -->
+	<context:annotation-config />
+	<context:component-scan base-package="cn.cuiboshi"/>
+
+
+	<!-- Spring配置	jdbc.properties	文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- Spring MVC	不用导入 -->
+	<!-- 导入IOC 和 AOP 的配置到总配置页面(托管到Spring) -->
+	<import resource="classpath:context-dao.xml" />
+	<!-- 导入Mybatis框架到总配置页面(托管到Spring) -->
+	<import resource="classpath:context-mybatis.xml" />
+	<!-- 导入Email配置文件到总配置 -->
+	<import resource="classpath:context-email.xml"/>
+</beans>

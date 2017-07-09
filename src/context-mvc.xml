@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    		http://www.springframework.org/schema/mvc 
+    		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+    		http://www.springframework.org/schema/context 
+	        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+	<!-- 在Spring MVC中开启注解 : mvc:annotation-driven 在Spring MVC中开启校验 : validator="validator" 
+		引号里的值必须和校验配置里的id值一样 -->
+	<mvc:annotation-driven validator="validator" />
+	<mvc:default-servlet-handler />
+	<!-- 扫描指定包下面的类 -->
+	<context:component-scan base-package="cn.cuiboshi.controller" />
+	
+	<!-- 视图转化结果集 -->
+	<!-- mvc跳转配置 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 添加 校验信息 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- 设置配置实现 -->
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+		<property name="validationMessageSource" ref="messageSource" /> <!-- 引入国际化配置文件 -->
+	</bean>
+	
+	<!-- 文件上传支持 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+</beans>
